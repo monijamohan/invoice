@@ -1,0 +1,186 @@
+  {% load staticfiles %}
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/css/custom.css' %}" />
+
+<div class="invoice---01">
+     <div class="Rectangle">
+	<a class="Dashboard" href="{% url 'index' %}">Dashboard</a>
+      </div>
+	<div class="Invoice-Details">
+	 Invoice Details
+	</div>
+	<div class="Rectangle12">
+	</div>
+	<div class="Rectangle6">
+	  <div class="Rectangle2">
+	       <input name="Rectangle-2_1" type="text" placeholder="Search...">
+	  </div>
+	<div class="Rectangle-list">
+     </div>
+</div>
+ 
+                     <a href="#Customer" role="button" data-toggle="modal">
+			<div class="circle">
+				</div>
+		      </a>
+    
+       <div id="Customer" class="modal fade" role="dialog">
+           <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <div style="clear: both">
+    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:</h4>
+                      <p><h4 class="Customer-Details" style="float: left">Customer Details</h4></p>
+                    </div>
+                     <div class="Rectangle-18">
+<a href="#bill" role="button" data-toggle="modal">
+                     <h4 class="skip" style="float: left">skip</h4> 
+	             </div></a>
+                </div>
+                           
+          
+                
+      <div class="modal-body">
+           <form id="customer-form" action="" method="post">
+               {% csrf_token %}
+       <div class="form-group row">
+           <div class="col-xs-6">
+             <label class="required">Full Name</label>
+            <input type="text" name="fullname" placeholder="Customer Name" required>
+             
+           </div>
+           <div class="col-xs-6">
+            <label ><div class="phone" stylefloat:left">Phone Number</div></label>
+           <input type="text" name="phonenumber" placeholder="" required>          
+         </div>
+       </div>
+           
+ <div class="form-group row">
+    <div class="col-xs-6">
+     <label>Adress</label>
+     <input type="text" name="adress" >
+     </div>
+
+    <div class="col-xs-5">
+    <label class="required">Email ID</label>
+     <input type="text" name="emailid" placeholder=" Customer Email ID"required>
+    </div>
+    <div class="col-xs-2">
+    <label >Pin Code</label>
+     <input type="text" name="pincode" placeholder="  686105">
+       </div>
+</div>
+  
+   
+
+   
+</div>
+
+
+
+
+        
+        <div class="modal-footer">
+<a href="#bill" role="button" data-toggle="modal">
+       .<div class="Rectangle-16"><h4 class="proceed" style="float: left">PROCEED</h4> </div></a>
+       </div>
+     </div>
+      
+   
+  </div>
+  
+</div>
+
+<div id="bill" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+    
+      
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div style="clear: both">
+    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:</h4>
+                      <p><h4 class="Customer-Details" style="float: left">Customer Details</h4></p>
+                     <div class="rectangle-edit"></div>
+                    </div>
+        </div>
+        <div class="modal-body">
+
+    			<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+						
+						<th class="text-center">
+							Item
+						</th>
+						<th class="text-center">
+							Quantity
+						</th>
+						<th class="text-center">
+							Price
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id='addr0'>
+						
+						</td>
+						<td>
+						<input type="text" name='item'  placeholder='item' class="form-control" />
+						</td>
+						<td>
+						<input type="text" name='quantity' placeholder='0.00'  class="form-control" />
+						</td>
+		
+				                    <td>
+				<input type="text" name='price' placeholder='0.00'  class="form-control" />
+</td>
+<td>
+
+<div class="Rectangle-8"></div>
+</td>
+						
+
+					</tr>
+                    <tr id='addr1'></tr>
+				</tbody>
+			</table>
+<input type="text" name="tax" placeholder="Tax" >   
+<input type="text" name="discount" placeholder="Discount" >   
+		</div>
+	</div>
+
+	 
+        <div class="modal-footer"> 
+<h4  style="float: left">Tax</h4>
+    			
+<input type="submit"  value="Save" />
+  </form
+       </div>
+     </div>
+      
+   
+  </div>
+<script type="text/javascript">
+$(document).on('submit','#customer-form',function(event){    
+    event.preventDefault()
+    var formData = $(this).serialize();
+    console.log(formData);
+    $.ajax({
+        
+        data: formData,
+        datatype: "json",
+        type: "POST",
+        success: function(data) {}
+   });
+});
+</script>
