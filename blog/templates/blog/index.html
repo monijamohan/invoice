@@ -1,186 +1,320 @@
-  {% load staticfiles %}
-
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Invoice</title>
+	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" href="{% static 'blog/css/custom.css' %}" />
 
-<div class="invoice---01">
-     <div class="Rectangle">
-	<a class="Dashboard" href="{% url 'index' %}">Dashboard</a>
-      </div>
-	<div class="Invoice-Details">
-	 Invoice Details
-	</div>
-	<div class="Rectangle12">
-	</div>
-	<div class="Rectangle6">
-	  <div class="Rectangle2">
-	       <input name="Rectangle-2_1" type="text" placeholder="Search...">
-	  </div>
-	<div class="Rectangle-list">
-     </div>
-</div>
- 
-                     <a href="#Customer" role="button" data-toggle="modal">
-			<div class="circle">
-				</div>
-		      </a>
-    
-       <div id="Customer" class="modal fade" role="dialog">
-           <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                   <div style="clear: both">
-    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
-    			<h4 class="Order-No"style="float: right">ORDER NO:</h4>
-                      <p><h4 class="Customer-Details" style="float: left">Customer Details</h4></p>
-                    </div>
-                     <div class="Rectangle-18">
-<a href="#bill" role="button" data-toggle="modal">
-                     <h4 class="skip" style="float: left">skip</h4> 
-	             </div></a>
-                </div>
-                           
-          
-                
-      <div class="modal-body">
-           <form id="customer-form" action="" method="post">
-               {% csrf_token %}
-       <div class="form-group row">
-           <div class="col-xs-6">
-             <label class="required">Full Name</label>
-            <input type="text" name="fullname" placeholder="Customer Name" required>
-             
-           </div>
-           <div class="col-xs-6">
-            <label ><div class="phone" stylefloat:left">Phone Number</div></label>
-           <input type="text" name="phonenumber" placeholder="" required>          
-         </div>
-       </div>
-           
- <div class="form-group row">
-    <div class="col-xs-6">
-     <label>Adress</label>
-     <input type="text" name="adress" >
-     </div>
-
-    <div class="col-xs-5">
-    <label class="required">Email ID</label>
-     <input type="text" name="emailid" placeholder=" Customer Email ID"required>
-    </div>
-    <div class="col-xs-2">
-    <label >Pin Code</label>
-     <input type="text" name="pincode" placeholder="  686105">
-       </div>
-</div>
-  
-   
-
-   
-</div>
+<SCRIPT language="javascript">
 
 
+function Sum(){
+			var j = document.getElementById("item_no").value;
+			var i = 0;
+			var price = 0;
+			var quantity = 0;
+			var sum = 0;
+			var grandTotal = 0;
+                        var taxAmount = 0;
+			var discountAmount = 0;
+			var tax = document.getElementById("tax").value;
+			var discount = document.getElementById("discount").value;
+			for(i=1;i<=j;i++){
+				var quan = "quantity"+i;
+				var pric = "price"+i;
+				quantity = document.getElementById(quan).value;
+				price = document.getElementById(pric).value;
+				sum = sum + (quantity*price);
+				taxAmount = (tax/100)*sum;
+				discountAmount = (discount/100)*sum;
+				grandTotal = taxAmount + sum - discountAmount;
+			}
+			document.getElementById("subtotal").value = sum;
+			document.getElementById("grandtotal").value = grandTotal;
+			document.getElementById("taxamount").value = taxAmount;
+			document.getElementById("discountamount").value = discountAmount;
+			document.getElementById("subtotal1").value = sum;
+			document.getElementById("grandtotal1").value = grandTotal;
+			document.getElementById("taxamount1").value = taxAmount;
+			document.getElementById("discountamount1").value = discountAmount;
+		}
+function addRow(tableID) {
+
+			var table = document.getElementById(tableID);
+
+			var rowCount = table.rows.length;
+			var previousRow = rowCount-1;
+			table.rows[previousRow].cells[6].innerHTML="";
+			var row = table.insertRow(rowCount);
 
 
-        
-        <div class="modal-footer">
-<a href="#bill" role="button" data-toggle="modal">
-       .<div class="Rectangle-16"><h4 class="proceed" style="float: left">PROCEED</h4> </div></a>
-       </div>
-     </div>
-      
-   
-  </div>
-  
-</div>
+			var cell1 = row.insertCell(0);
+			var element1 = document.createElement("input");
+			element1.type = "text";
+			element1.name ="item"+rowCount;
+			element1.id ="item"+rowCount;
+			element1.setAttribute("class","item");
+			element1.placeholder = "Please Enter Item Name";
+			cell1.appendChild(element1);
 
-<div id="bill" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-    
-      
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <div style="clear: both">
-    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
-    			<h4 class="Order-No"style="float: right">ORDER NO:</h4>
-                      <p><h4 class="Customer-Details" style="float: left">Customer Details</h4></p>
-                     <div class="rectangle-edit"></div>
-                    </div>
-        </div>
-        <div class="modal-body">
+			var cell2 = row.insertCell(1);
+			cell2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
-    			<div class="row clearfix">
-		<div class="col-md-12 column">
-			<table class="table table-bordered table-hover" id="tab_logic">
-				<thead>
-					<tr >
-						
-						<th class="text-center">
-							Item
-						</th>
-						<th class="text-center">
-							Quantity
-						</th>
-						<th class="text-center">
-							Price
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr id='addr0'>
-						
-						</td>
-						<td>
-						<input type="text" name='item'  placeholder='item' class="form-control" />
-						</td>
-						<td>
-						<input type="text" name='quantity' placeholder='0.00'  class="form-control" />
-						</td>
+			var cell3 = row.insertCell(2);
+			var element2 = document.createElement("input");
+			element2.type = "number";
+			element2.name = "quantity"+rowCount;
+			element2.setAttribute("class","quantity");
+			element2.setAttribute("onchange","Sum();");
+			element2.id = "quantity"+rowCount;
+			element2.value = "0";
+			cell3.appendChild(element2);
+
+			var cell4 = row.insertCell(3);
+			cell4.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+			var cell5 = row.insertCell(4);
+			var element3 = document.createElement("input");
+			element3.type = "number";
+			element3.name = "price"+rowCount;
+			element3.id = "price"+rowCount;
+			element3.setAttribute("class","price");
+			element3.setAttribute("onchange","Sum();");
+			element3.value = "0";
+			cell5.appendChild(element3);
+
+			var cell6 = row.insertCell(5);
+			cell6.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+			var cell7 = row.insertCell(6);
+			cell7.innerHTML = "<a href=\"javascript:\" onclick=\"addRow('billtable')\"><img src=\"static/images/enter1.png\" height='41px' width='50px'>";
+
+			document.getElementById("item_no").value=rowCount;
+		}
+               function skip(){
+			document.getElementById("hidden_data").value="skip";
+		}
+		function proceed(){
+			document.getElementById("hidden_data").value="proceed";
+		}
 		
-				                    <td>
-				<input type="text" name='price' placeholder='0.00'  class="form-control" />
-</td>
-<td>
+		function getknown() {
+			var name = document.getElementById("name-field").value;
+			var email = document.getElementById("email-field").value;
+			if (name=="")
+				name = "Unknown Customer"
+			name_and_email.innerHTML= name+"<br>"+email;
+		}
+		
+		
 
-<div class="Rectangle-8"></div>
-</td>
-						
+</SCRIPT>
+</head>
+<body>
+<form method="post" id="invform" name="invform">
+{% csrf_token %}
 
-					</tr>
-                    <tr id='addr1'></tr>
-				</tbody>
-			</table>
-<input type="text" name="tax" placeholder="Tax" >   
-<input type="text" name="discount" placeholder="Discount" >   
+  <div class="invoice01">
+		<div class="Rectangle">
+			<a class="Dashboard" href="{% url 'index' %}">Dashboard</a>
 		</div>
+		<div class="Invoice-Details">
+			Invoice Details
+		</div>
+		<a href="#CustomerModal" role="button" data-toggle="modal">
+			<div class="Oval">
+				<img src="static/images/plus.svg">
+			</div>
+		</a>
+		<div class="Rectangle-12">
+			
+		</div>
+		<div class="Rectangle-6">
+			<div class="Rectangle-2">
+				<input id="Rectangle-2_1" type="text" placeholder="Search...">
+				<p class = "invoices">INVOICES - {{invoice}}</p>
+
+			</div>
+			<div class="Rectangle-list">
+				<table class="bill-list">
+					{% for item in invoicetable %}
+					<tr>
+						<td>
+							
+							<table style="width:348px;border:solid 1px rgb(202, 203, 206);">
+								<tr><td style="width:140px;">INV.# -{{item.invoice_no}}</td> <td style="width:170px;">{{item.date}}</td></tr>
+								<tr><td style="width:140px;">{{item.name}}</td><td style="width:170px;">₹ - {{item.grand_total}}</td></tr>
+							</table>
+						</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+
+		</div>
+
+
+
 	</div>
 
-	 
-        <div class="modal-footer"> 
-<h4  style="float: left">Tax</h4>
-    			
-<input type="submit"  value="Save" />
-  </form
-       </div>
-     </div>
-      
-   
+
+<!-- Modal for Customer-Details -->
+<div id="CustomerModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				<div style="clear: both">
+    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoices</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:{{newbill}}</h4>
+				</div>
+				<div class="Customer-Details">
+					CUSTOMER DETAILS
+				</div>
+				<a href="#BillModal" onclick="javascript:skip();" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="skip-button">
+						<p class="skip">SKIP</p>
+					</div>
+				</a>
+      </div>
+      <div class="modal-body">
+				<input type="hidden" id="hidden_data" name="hidden_data" value="ready">
+				<table>
+				  <tr>
+				    <th><label class="required">Full Name<label></th>
+						<th>&nbsp;&nbsp;&nbsp;</th>
+				    <th><label class="required">Phone Number</label></th>
+				  </tr>
+				  <tr>
+				    <td><input name="name-field" id="name-field" type="text" placeholder="Customer Name" required></td>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><input name="phone-field" id="phone-field" type="text"></td>
+				  </tr>
+				  <tr>
+				    <td>Address</td>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><label class="required">Email Id</label></td>
+				  </tr>
+				  <tr>
+				    <td rowspan="3"><textarea id="address-field" name="address-field" placeholder="Complete Address"></textarea></td>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><input name="email-field" id="email-field" type="email" placeholder="Customer Email Address"></td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td>Pincode</td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><input name="pin-field" id="pin-field" type="text" placeholder="560067"></td>
+				  </tr>
+				</table>
+      </div>
+      <div class="modal-footer">
+				<a href="#BillModal" onclick="javascript:proceed();getknown();" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="proceedbutton">
+        		<p class="proceed">Proceed</p>
+					</div>
+				</a>
+				<br><br>
+			</div>
+    </div>
+
   </div>
-<script type="text/javascript">
-$(document).on('submit','#customer-form',function(event){    
-    event.preventDefault()
-    var formData = $(this).serialize();
-    console.log(formData);
-    $.ajax({
-        
-        data: formData,
-        datatype: "json",
-        type: "POST",
-        success: function(data) {}
-   });
-});
-</script>
+</div>
+
+
+
+<!-- Modal for bills -->
+<div id="BillModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				<div style="clear: both">
+    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:{{newbill}}</h4>
+				</div>
+				<div class="Customer-Details">
+					PRODUCT DETAILS
+				</div>
+				<div class="name_and_email" id="name_and_email">
+
+				</div>
+				<a href="#CustomerModal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="edit-button"></div>
+				</a>
+      </div>
+      <div class="modal-body">
+				<table id="billtable" class="billtable">
+    			<tr>
+        		<th>Item</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        		<th>Quantity</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>Price --₹</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+    			</tr>
+    			<tr>
+        		<td><input name="item1" id="item1" class="item" type="text" placeholder="Please Enter Item Name"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><input name="quantity1" type="number" class="quantity" onchange="javascript:Sum();" id="quantity1"  value="0"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        		<td><input name="price1" type="number" class="price" onchange="javascript:Sum();" id="price1"  value="0"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><a href="javascript:" onclick="addRow('billtable')"><img src="static/images/enter1.png" height='41px' width='50px'></a></td>
+					</tr>
+				</table>
+				<input type="text" name="tax" id="tax" placeholder="Tax" onchange="javascript:Sum()">
+				<input type="text" name="discount" id="discount" placeholder="Discount" onchange="javascript:Sum()">
+				<div class="total">
+					<p class="Subtotal">Sub Total:
+					<input type="number" name="subtotal" id="subtotal" value="0" disabled>
+					<input type="hidden" name="subtotal1" id="subtotal1" value ="0">
+					</p>
+				</div>
+				<input type="hidden" id="item_no" name="item_no" value="1">
+			</form>
+      </div>
+      <div class="modal-footer">
+				<div class="taxAmount">
+					<h6 id="taxAmount">Tax</h6>
+					<input type="text" name="taxamount" id="taxamount" value="0" disabled>
+					<input type="hidden" name="taxamount1" id="taxamount1" value ="0">
+				</div>
+				<div class="discountAmount">
+					<h6 id="discountAmount">Discount</h6>
+					<input type="text" name="discountamount" id="discountamount" value="0" disabled>
+					<input type="hidden" name="discountamount1" id="discountamount1" value ="0">
+				</div>
+				<div class="grandTotal">
+					<h6 id="grandTotal">Grand Total</h6>
+					<input type="text" name="grandtotal" id="grandtotal" value="0" disabled>
+					<input type="hidden" name="grandtotal1" id="grandtotal1" value ="0">
+				</div>
+				<a href="javascript:" onclick="document.forms.invform.submit();" role="button" data-toggle="modal" style="text-decoration:none;">
+					<div class="savebutton">
+        		<p class="save">Save</p>
+					</div>
+				</a>
+				<br><br>
+			</div>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
+</html>

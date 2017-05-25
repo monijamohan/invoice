@@ -1,19 +1,14 @@
-
 from django import forms
 from django.forms import ModelForm
-from blog.models import Customer, Product  
+from blog.models import invoice, items
 
-class CustomerForm(forms.ModelForm):
-   adress = forms.CharField( widget=forms.Textarea )
-   class Meta:
-        model = Customer 
-        fields = [ 'full_name' , 'phone_number', 'adress', 'email_ID', 'Pincode' ]
+class InvoiceForm(forms.ModelForm):
+    address = forms.CharField(widget = forms.Textarea)
+    class Meta:
+        model = invoice
+        fields = ['name', 'address', 'phone', 'email', 'pincode', 'invoice_no', 'tax_percent', 'discount_percent', 'sub_total', 'tax_amount', 'discount_amount', 'grand_total']
 
-
-class ProductForm(forms.ModelForm):
-   
-   class Meta:
-        model = Product 
-        fields = [ 'item' , 'quantity', 'price' ]
-
-
+class ItemsForm(forms.ModelForm):
+    class Meta:
+        model = items
+        fields = ['invoice_no', 'item_no', 'item', 'quantity', 'price']

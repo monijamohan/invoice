@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Customer , Product
+from blog.models import invoice,items
 
-admin.site.register(Customer)
-admin.site.register(Product)
-
+admin.site.register(invoice)
+admin.site.register(items)
